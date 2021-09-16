@@ -1,13 +1,30 @@
+import store from "../store";
+import { addTodo } from "../actions";
 export default function AddTodo(){
+    let id = 0;
+    function handleSubmit(e){
+        e.preventDefault();
+        //let input = [];
+        let item = {};
+        item['id']=id++;
+        //console.log(e.target)
+        for(let ele of e.target){
+            item[ele.name]=ele.value;
+        }
+        
+        store.dispatch(addTodo(item));
+        
+        
+    }
     return(
-        <form>
+        <form onSubmit={handleSubmit}>
             <div>
                 <label>Description: </label>
-                <input type='text'/>
+                <input type='text' name='description'/>
             </div>
             <div>
                 <label>Category: </label>
-                <select>
+                <select name='category'>
                     <option value='html'>html</option>
                     <option value='css'>css</option>
                     <option value='js'>js</option>
@@ -15,10 +32,10 @@ export default function AddTodo(){
             </div>
             <div>
                 <label>Content: </label>
-                <textarea></textarea>
+                <textarea name='textarea'></textarea>
             </div>
             <input type='submit'value='submit'/>
-    </form>
+        </form>
 
     );
     
