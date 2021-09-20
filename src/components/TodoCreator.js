@@ -1,23 +1,30 @@
 import store from "../store";
 import { addTodo } from "../actions";
 export default function AddTodo(){
-    let id = 0;
+    let id = 1;
     function handleSubmit(e){
         e.preventDefault();
-        //let input = [];
         let item = {};
-        item['id']=id++;
-        //console.log(e.target)
+        let text={}
         for(let ele of e.target){
-            item[ele.name]=ele.value;
+            if(ele.name!==''){
+                text = {
+                    ...text,
+                    [ele.name]:ele.value
+                }
+            }    
         }
+        item['id']=id++;
         
+        item['text']=text;
+        item['selected']=false;
         store.dispatch(addTodo(item));
+        
         
         
     }
     return(
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='add-todo'>
             <div>
                 <label>Description: </label>
                 <input type='text' name='description'/>
